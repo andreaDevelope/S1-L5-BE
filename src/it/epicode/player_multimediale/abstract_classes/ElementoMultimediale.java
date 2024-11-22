@@ -10,6 +10,8 @@ public abstract class ElementoMultimediale {
     public String getTitolo(){
         return this.titolo;
     }
+
+    public abstract void esegui();
 }
 
 

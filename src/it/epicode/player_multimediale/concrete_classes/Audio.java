@@ -34,6 +34,11 @@ public class Audio extends ElementoMultimediale implements IAudio {
         System.out.println("Volume diminuito di: " + param);
     }
 
+    @Override
+    public void esegui() {
+        play();
+    }
+
     public void play() {
         String asterisco = "";
         for (int i = 0; i < this.volume; i++) {

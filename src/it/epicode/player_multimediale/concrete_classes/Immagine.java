@@ -11,6 +11,11 @@ public class Immagine extends ElementoMultimediale implements IVideo {
         this.luminosita = 5;
     }
 
+    @Override
+    public void esegui() {
+        show();
+    }
+
     public void aumentaLuminosita(byte param) throws Exception {
         if (param < 1) {
             throw new Exception("Il valore per aumentare la luminosità deve essere positivo.");

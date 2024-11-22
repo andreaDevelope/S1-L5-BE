@@ -73,4 +73,9 @@ public class Video extends ElementoMultimediale implements IAudio, IVideo {
         }
 
     }
+
+    @Override
+    public void esegui() {
+        play();
+    }
 }
