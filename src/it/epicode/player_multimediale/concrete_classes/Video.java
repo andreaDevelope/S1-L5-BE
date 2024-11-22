@@ -10,7 +10,7 @@ public class Video extends ElementoMultimediale implements IAudio, IVideo {
     private byte volume;
 
 
-    public Video(String titolo, byte durata) {
+    public Video(String titolo, byte durata) throws Exception {
         super(titolo);
         this.luminosita = 7;
         this.durata = durata;

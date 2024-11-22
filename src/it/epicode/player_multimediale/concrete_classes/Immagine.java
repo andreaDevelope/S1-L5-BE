@@ -6,7 +6,7 @@ import it.epicode.player_multimediale.interfaces.IVideo;
 public class Immagine extends ElementoMultimediale implements IVideo {
     private byte luminosita;
 
-    public Immagine(String titolo) {
+    public Immagine(String titolo) throws Exception {
         super(titolo);
         this.luminosita = 5;
     }

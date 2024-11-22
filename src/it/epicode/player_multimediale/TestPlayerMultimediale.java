@@ -13,6 +13,7 @@ public class TestPlayerMultimediale {
         Scanner sc = new Scanner(System.in);
         Audio audio1 = new Audio("audio1", (byte) 5);
         Video video1 = new Video("video1", (byte) 5);
+        Immagine img1 = new Immagine("img1");
 
         System.out.println("----------------Audio----------------\n");
 
@@ -49,18 +50,51 @@ public class TestPlayerMultimediale {
         //test Video
         try {
             video1.aumentaLuminosita((byte)3);
+            video1.alzaVolume((byte) 5);
             video1.play();
         } catch (Exception e) {
             System.out.println("Errore " + e.getMessage());
         }
         try {
             video1.diminuiciLuminosita((byte)5);
+            video1.abbassaVolume((byte) 7);
+
             video1.play();
         } catch (Exception e) {
             System.out.println("Errore " + e.getMessage());
         }
 
         //scateno errori per la classe Video
+        try {
+            video1.aumentaLuminosita((byte) -3);
+        } catch (Exception e) {
+            System.out.println("Errore " + e.getMessage());
+        }
+
+        try {
+            video1.abbassaVolume((byte) 10);
+        } catch (Exception e) {
+            System.out.println("Errore " + e.getMessage());
+        }
+
+        //test immagini
+
+        System.out.println("\n----------------Immagini----------------\n");
+
+        try {
+            img1.aumentaLuminosita((byte)3);
+            img1.show();
+        } catch (Exception e) {
+            System.out.println("Errore " + e.getMessage());
+        }
+        try {
+            img1.diminuiciLuminosita((byte)5);
+            img1.show();
+        } catch (Exception e) {
+            System.out.println("Errore " + e.getMessage());
+        }
+
+        //scateno errori per la classe Immagine
         try {
             video1.aumentaLuminosita((byte) -3);
         } catch (Exception e) {
@@ -77,100 +111,127 @@ public class TestPlayerMultimediale {
 
         System.out.println("\n----------------Interazione con l'utente----------------\n");
 
-        //dati del primo file audio
-        System.out.println("crea il tuo elemento multimediale Audio e aggiungilo alla lista passando " +
-                "i seguenti valori: " +
-                "\ninserisci un titolo");
-        String titoloAudio1 = sc.nextLine();
-
-        System.out.println("inserisci durata: un intero da 1 a 127");
-        byte durataAudio1 = 1;
-        try {
-            System.out.println("Inserisci la durata del video (byte):");
-            durataAudio1 = sc.nextByte();
-            sc.nextLine();
-            if (durataAudio1 < 1 || durataAudio1 > 127) {
-                throw new Exception("La durata deve essere un valore byte valido (tra -128 e 127).");
-            }
-        } catch (Exception e) {
-            System.out.println("Errore: " + e.getMessage());
-        }
-
-
-        //dati del primo file video
-        System.out.println("crea il tuo elemento multimediale Video e aggiungilo alla lista passando " +
-                "i seguenti valori: " +
-                "\ninserisci un titolo");
-
-        String titoloVideo1 = sc.nextLine();
-
-        byte durataVideo1 = 1;
-        try {
-            System.out.println("inserisci durata: un intero da 1 a 127");
-
-            durataVideo1 = sc.nextByte();
-            sc.nextLine();
-            if (durataVideo1 < 1 || durataVideo1 > 127) {
-                throw new Exception("La durata deve essere un valore byte valido (tra -128 e 127).");
-            }
-        } catch (Exception e) {
-            System.out.println("Errore: " + e.getMessage());
-        }
-
-        //dati del primio file img
-
-        System.out.println("crea il tuo elemento multimediale Immagine e aggiungilo alla lista passando " +
-                "i seguenti valori: " +
-                "\ninserisci un titolo");
-        String titoloImg1 = sc.nextLine();
-
-        //dati del secondo file img
-        System.out.println("crea un altro file Immagine e aggiungilo alla lista passando " +
-                "i seguenti valori: " +
-                "\ninserisci un titolo");
-        String titoloImg2 = sc.nextLine();
-
-        //dati secondo file video
-        System.out.println("crea il tuo secondo elemento multimediale Video e aggiungilo alla lista passando " +
-                "i seguenti valori: " +
-                "\ninserisci un titolo");
-
-        String titoloVideo2 = sc.nextLine();
-
-        byte durataVideo2 = 1;
-        try {
-            System.out.println("inserisci durata: un intero da 1 a 127");
-
-            durataVideo2 = sc.nextByte();
-            sc.nextLine();
-            if (durataVideo2 < 1 || durataVideo2> 127) {
-                throw new Exception("La durata deve essere un valore byte valido (tra -128 e 127).");
-            }
-        } catch (Exception e) {
-            System.out.println("Errore: " + e.getMessage());
-        }
-
-        //creo una lista con i 5 file multimediali
-        Audio audio2 = new Audio(titoloAudio1, durataAudio1);
-        Video video2 = new Video(titoloVideo1, durataVideo1);
-        Video video3 = new Video(titoloVideo2, durataVideo2);
-        Immagine immagine2 = new Immagine(titoloImg1);
-        Immagine immagine3 = new Immagine(titoloImg2);
-
         ArrayList<ElementoMultimediale> lettoreMultimediale = new ArrayList<>();
-        lettoreMultimediale.add(audio2);
-        lettoreMultimediale.add(video2);
-        lettoreMultimediale.add(immagine2);
-        lettoreMultimediale.add(immagine3);
-        lettoreMultimediale.add(video3);
 
-        //creo un lettore multimediale con l aiuto dello scanner
+        // Dati del primo file audio
+        Audio audio2 = null;
+        while (audio2 == null) {
+            try {
+                System.out.println("Crea il tuo elemento multimediale Audio e aggiungilo alla lista passando i seguenti valori:");
+                System.out.println("Inserisci un titolo ATTENZIONE IL TITOLO è UNIVOCO:");
+                String titoloAudio1 = sc.nextLine();
 
+                System.out.println("Inserisci durata: un intero da 1 a 127");
+                byte durataAudio1 = 1;
+                try {
+                    durataAudio1 = sc.nextByte();
+                    sc.nextLine();
+                    if (durataAudio1 < 1 || durataAudio1 > 127) {
+                        throw new Exception("La durata deve essere un valore valido tra 1 e 127.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Errore: " + e.getMessage());
+                    sc.nextLine();
+                }
+
+                audio2 = new Audio(titoloAudio1, durataAudio1);
+                lettoreMultimediale.add(audio2);
+            } catch (Exception e) {
+                System.out.println("Errore nella creazione dell'Audio: " + e.getMessage());
+            }
+        }
+
+        // Dati del primo file video
+        Video video2 = null;
+        while (video2 == null) {
+            try {
+                System.out.println("Crea il tuo elemento multimediale Video e aggiungilo alla lista passando i seguenti valori:");
+                System.out.println("Inserisci un titolo: ATTENZIONE IL TITOLO è UNIVOCO:");
+                String titoloVideo1 = sc.nextLine();
+
+                System.out.println("Inserisci durata: un intero da 1 a 127");
+                byte durataVideo1 = 1;
+                try {
+                    durataVideo1 = sc.nextByte();
+                    sc.nextLine();
+                    if (durataVideo1 < 1 || durataVideo1 > 127) {
+                        throw new Exception("La durata deve essere un valore valido tra 1 e 127.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Errore: " + e.getMessage());
+                    sc.nextLine();
+                }
+
+                video2 = new Video(titoloVideo1, durataVideo1);
+                lettoreMultimediale.add(video2);
+            } catch (Exception e) {
+                System.out.println("Errore nella creazione del Video: " + e.getMessage());
+            }
+        }
+
+        // Dati del primo file immagine
+        Immagine immagine2 = null;
+        while (immagine2 == null) {
+            try {
+                System.out.println("Crea il tuo elemento multimediale Immagine e aggiungilo alla lista passando i seguenti valori:");
+                System.out.println("Inserisci un titolo: ATTENZIONE IL TITOLO è UNIVOCO:");
+                String titoloImg1 = sc.nextLine();
+
+                immagine2 = new Immagine(titoloImg1);
+                lettoreMultimediale.add(immagine2);
+            } catch (Exception e) {
+                System.out.println("Errore nella creazione dell'Immagine: " + e.getMessage());
+            }
+        }
+
+        // Dati del secondo file immagine
+        Immagine immagine3 = null;
+        while (immagine3 == null) {
+            try {
+                System.out.println("Crea un altro file Immagine e aggiungilo alla lista passando i seguenti valori:");
+                System.out.println("Inserisci un titolo: ATTENZIONE IL TITOLO è UNIVOCO:");
+                String titoloImg2 = sc.nextLine();
+
+                immagine3 = new Immagine(titoloImg2);
+                lettoreMultimediale.add(immagine3);
+            } catch (Exception e) {
+                System.out.println("Errore nella creazione dell'Immagine: " + e.getMessage());
+            }
+        }
+
+        // Dati del secondo file video
+        Video video3 = null;
+        while (video3 == null) {
+            try {
+                System.out.println("Crea il tuo secondo elemento multimediale Video e aggiungilo alla lista passando i seguenti valori:");
+                System.out.println("Inserisci un titolo: ATTENZIONE IL TITOLO è UNIVOCO:");
+                String titoloVideo2 = sc.nextLine();
+
+                System.out.println("Inserisci durata: un intero da 1 a 127");
+                byte durataVideo2 = 1;
+                try {
+                    durataVideo2 = sc.nextByte();
+                    sc.nextLine();
+                    if (durataVideo2 < 1 || durataVideo2 > 127) {
+                        throw new Exception("La durata deve essere un valore valido tra 1 e 127.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Errore: " + e.getMessage());
+                    sc.nextLine();
+                }
+
+                video3 = new Video(titoloVideo2, durataVideo2);
+                lettoreMultimediale.add(video3);
+            } catch (Exception e) {
+                System.out.println("Errore nella creazione del Video: " + e.getMessage());
+            }
+        }
+
+        // Lettore multimediale
         while (true) {
             byte data = -1;
             while (data < 0 || data > 5) {
-                System.out.println("inserisci un valore compreso tra 1 e 5 per decidere che file riprodurre" +
-                        " o 0 per terminare");
+                System.out.println("Inserisci un valore compreso tra 1 e 5 per decidere che file riprodurre o 0 per terminare:");
                 try {
                     data = sc.nextByte();
                     sc.nextLine();
@@ -184,11 +245,12 @@ public class TestPlayerMultimediale {
             }
 
             if (data == 0) {
-                System.out.println("lettore multimediale terminato");
+                System.out.println("Lettore multimediale terminato");
                 break;
             } else {
                 lettoreMultimediale.get(data - 1).esegui();
             }
         }
+
     }
 }

@@ -7,7 +7,7 @@ public class Audio extends ElementoMultimediale implements IAudio {
     private byte durata;
     private byte volume;
 
-    public Audio(String titolo, byte durata) {
+    public Audio(String titolo, byte durata) throws Exception {
         super(titolo);
         this.durata = durata;
         this.volume = 5;
